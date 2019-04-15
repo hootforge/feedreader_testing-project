@@ -104,27 +104,20 @@ $(function() {
        * Remember, loadFeed() is asynchronous so this test will require
        * the use of Jasmine's beforeEach and asynchronous done() function.
        */
-       beforeEach(async function(done) {
+       beforeEach(function(done) {
          loadFeed(0);
-
-           // do some stuff
-
            done();
-
-         }, 1000);
-  //     });
-
+         });
 
          it('are loading', function(done){
            const newFeed = document.getElementsByClassName('feed')[0];
            console.log(newFeed);
-           const newItem = document.getElementsByClassName('entry')[0];
-console.log(newItem);
-           expect(newFeed.contains(newItem)).toBe(true);
+           const newItem = document.getElementsByClassName('entry');
+           console.log(document.getElementsByClassName('entry'));
+           expect(newFeed.contains(newItem[0])).toBe(true);
            done();
         });
-
-    })
+    });
 
 
     /* TODO: Write a new test suite named "New Feed Selection" */
@@ -133,11 +126,17 @@ console.log(newItem);
        * by the loadFeed function that the content actually changes.
        * Remember, loadFeed() is asynchronous.
        */
-
+       var theyMatch = true;
+       beforeEach(function(done) {
+         const oldFeed = document.getElementsByClassName('feed')[0].cloneNode();
+         loadFeed(0);
+         const newFeed = document.getElementsByClassName('feed')[0];
+         if (newFeed != oldFeed) {theyMatch = false}
+           done();
+         });
          it('is loading', function(){
-                      });
-
-    })
-
+          expect(theyMatch).not.toBe(true);
+        });
+    });
 
 }());
