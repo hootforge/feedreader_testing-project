@@ -111,10 +111,15 @@ $(function() {
 
          it('are loading', function(done){
            const newFeed = document.getElementsByClassName('feed')[0];
-           console.log(newFeed);
-           const newItem = document.getElementsByClassName('entry');
-           console.log(document.getElementsByClassName('entry'));
-           expect(newFeed.contains(newItem[0])).toBe(true);
+           var allSet = false;
+           var checkForEntry = newFeed.firstElementChild;
+           while (checkForEntry != null){
+             if (checkForEntry.className = 'entry'){
+               allSet = true;
+             }
+               checkForEntry = checkForEntry.firstElementChild;
+             }
+           expect(allSet).toBe(true);
            done();
         });
     });
@@ -135,7 +140,7 @@ $(function() {
            done();
          });
          it('is loading', function(){
-          expect(theyMatch).not.toBe(true);
+          expect(theyMatch).toBe(false);
         });
     });
 
