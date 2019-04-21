@@ -63,38 +63,16 @@ $(function() {
          /* This test makes sure the menu is hidden and then fakes a click on
           * the hamburger icon and checks for a visible menu.
           */
-          it('comes when you click the hamburger ...', function(){
+          it('comes and goes when you click the hamburger', function(){
             const hamburger = document.getElementsByClassName('icon-list')[0];
             //make sure we're starting out hiddden:
             if (!document.body.classList.contains('menu-hidden')){
               document.body.classList.add('menu-hidden'); }
-            var itWorks = false;
             hamburger.click();
-            if (!document.body.classList.contains('menu-hidden')){
-                //hamburger.click();
-                //if (document.body.classList.contains('menu-hidden')){
-                  itWorks = true;
-            }
-            expect(itWorks).toBe(true);
-      });//closes come when you click
-
-               /* This test makes sure the menu is visible and then fakes a
-               * click on the hamburger icon to make it go away
-                */
-                it('... and goes away when you click it again', function(){
-                  const hamburger = document.getElementsByClassName('icon-list')[0];
-                  //make sure we're starting out showing:
-                  if (document.body.classList.contains('menu-hidden')){
-                    document.body.classList.remove('menu-hidden'); }
-                  var itWorks = false;
-                  hamburger.click();
-                //  if (!document.body.classList.contains('menu-hidden')){
-                //      hamburger.click();
-                      if (document.body.classList.contains('menu-hidden')){
-                        itWorks = true;
-                  }
-                  expect(itWorks).toBe(true);
-            }); //closes and goes away after
+            expect(document.body.classList.contains('menu-hidden')).toBe(false);
+            hamburger.click();
+            expect(document.body.classList.contains('menu-hidden')).toBe(true);
+          }); //closes comes and goes
   });
 
     /* new test suite named "Initial Entries" */
@@ -105,8 +83,6 @@ $(function() {
      * Remember, loadFeed() is asynchronous so this test will require
      * the use of Jasmine's beforeEach and asynchronous done() function
      */
-     var newEntries;
-     var newFeed;
        /*beforeEach will run loadfeed and make sure it's finished
        * before running the are loading test.
        */
@@ -125,7 +101,6 @@ $(function() {
      * by the loadFeed function that the content actually changes.
      * Remember, loadFeed() is asynchronous.
      */
-     var theyChanged = false;
      var oldFeed, newFeed;
      //set up by calling loadfeed and cloaning the return,
      // then calling it again and comparing new and old.
