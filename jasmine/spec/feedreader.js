@@ -31,8 +31,8 @@ $(function() {
 
         it(' each have a URL which is defined and not empty.', function(){
              allFeeds.forEach(function(feed){
-                 expect(feed['url']).toBeDefined();
-                 expect(feed['url'].length).not.toBe(0);
+                 expect(feed.url).toBeDefined();
+                 expect(feed.url.length).not.toBe(0);
                });
              });
 
@@ -43,40 +43,59 @@ $(function() {
 
         it(' each have a Name which is defined and not empty.', function(){
              allFeeds.forEach(function(feed){
-                 expect(feed['name']).toBeDefined();
-                 expect(feed['name'].length).not.toBe(0);
+                 expect(feed.name).toBeDefined();
+                 expect(feed.name.length).not.toBe(0);
                });
              });
          });
 
     /* new test suite named "The menu" */
-  describe('The menu', function(){
-      /* This test ensures the menu element is
-       * hidden by default by ensuring the body initializes with
-       * menu-hidden class
-       */
+    describe('The menu', function(){
+        /* This test ensures the menu element is
+         * hidden by default by ensuring the body initializes with
+         * menu-hidden class
+         */
 
-        it('is hidden to start', function(){
-            expect(document.body.classList.contains('menu-hidden')).toBe(true);
-        });
+          it('is hidden to start', function(){
+              expect(document.body.classList.contains('menu-hidden')).toBe(true);
+          });//closes hidden to start
 
-       /* This test fakes a click on the hamburger icon, checks for
-       * a visible menu, and then sends another click to make sure the
-       * menu-hidden class has returned.
-        */
-        it('comes when you click the hamburger and goes away when you click it again', function(){
-          const hamburger = document.getElementsByClassName('icon-list')[0];
-          var itWorks = false;
-          hamburger.click();
-          if (!document.body.classList.contains('menu-hidden')){
-              hamburger.click();
-              if (document.body.classList.contains('menu-hidden')){
-                itWorks = true;
-          }
-          expect(itWorks).toBe(true);
-        }
-    });
-});
+         /* This test makes sure the menu is hidden and then fakes a click on
+          * the hamburger icon and checks for a visible menu.
+          */
+          it('comes when you click the hamburger ...', function(){
+            const hamburger = document.getElementsByClassName('icon-list')[0];
+            //make sure we're starting out hiddden:
+            if (!document.body.classList.contains('menu-hidden')){
+              document.body.classList.add('menu-hidden'); }
+            var itWorks = false;
+            hamburger.click();
+            if (!document.body.classList.contains('menu-hidden')){
+                //hamburger.click();
+                //if (document.body.classList.contains('menu-hidden')){
+                  itWorks = true;
+            }
+            expect(itWorks).toBe(true);
+      });//closes come when you click
+
+               /* This test makes sure the menu is visible and then fakes a
+               * click on the hamburger icon to make it go away
+                */
+                it('... and goes away when you click it again', function(){
+                  const hamburger = document.getElementsByClassName('icon-list')[0];
+                  //make sure we're starting out showing:
+                  if (document.body.classList.contains('menu-hidden')){
+                    document.body.classList.remove('menu-hidden'); }
+                  var itWorks = false;
+                  hamburger.click();
+                //  if (!document.body.classList.contains('menu-hidden')){
+                //      hamburger.click();
+                      if (document.body.classList.contains('menu-hidden')){
+                        itWorks = true;
+                  }
+                  expect(itWorks).toBe(true);
+            }); //closes and goes away after
+  });
 
     /* new test suite named "Initial Entries" */
   describe('Initial Entries ', function(){
@@ -96,10 +115,7 @@ $(function() {
          });
 
          it('are loading', function(){
-           newFeed = document.getElementsByClassName('feed')[0];
-           firstEntry = document.getElementsByClassName('entry')[0];
-           var allSet = newFeed.contains(firstEntry);
-           expect(allSet).toBe(true);
+           expect(((document.querySelector('.feed').querySelectorAll('.entry')).length) > 0).toBe(true);
         });
     });
 
@@ -117,10 +133,10 @@ $(function() {
     beforeEach(function(done) {
       loadFeed(0, function() {
         oldFeed=document.getElementsByClassName('feed')[0].cloneNode(true);
-        console.log(oldFeed);
+
         loadFeed(1, function(){
           newFeed=document.getElementsByClassName('feed')[0].cloneNode(true);
-          console.log(newFeed);
+
           done();
         }); // closing loadFeed1
       }); // closing loadFeed0
@@ -128,7 +144,7 @@ $(function() {
 
    // and the actual test is here:
     it('is loading', function(){
-        expect(newFeed==oldFeed).toBe(false);
+        expect(newFeed.innerHTML==oldFeed.innerHTML).toBe(false);
     });//closing it is loading
   }); // closing new feed selection suite
 }());
